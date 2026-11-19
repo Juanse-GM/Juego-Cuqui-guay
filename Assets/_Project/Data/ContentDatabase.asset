@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eacc13011fe1d0c48818c5d4e6585f12, type: 3}
+  m_Name: ContentDatabase
+  m_EditorClassIdentifier:
+  interactions:
+  - id: int_bed_inspect
+    presentationText: 'Una cama hecha con cuidado. Todavía no es hora de dormir.'
+    repeatPolicy: 1
+    conditions: []
+    effects: []
+  - id: int_desk_note
+    presentationText: 'Una nota en el escritorio: Comprar comida. No olvidar. —Ava'
+    repeatPolicy: 0
+    conditions: []
+    effects:
+    - type: 0
+      key: note_read
+      value: 0
+      stat: 0
+  - id: int_window_view
+    presentationText: 'Desde la ventana se ve la ciudad. El día pasa volando...'
+    repeatPolicy: 1
+    conditions: []
+    effects:
+    - type: 4
+      key: ''
+      value: 1
+      stat: 0
+  - id: int_drawer_locked
+    presentationText: ''
+    repeatPolicy: 0
+    conditions:
+    - type: 0
+      key: found_key
+      value: 0
+    effects: []
+  - id: int_talk_ava
+    presentationText: ''
+    repeatPolicy: 1
+    conditions: []
+    effects:
+    - type: 5
+      key: dlg_ava_meet
+      value: 0
+      stat: 0
+  dialogues:
+  - id: dlg_ava_meet
+    startNodeId: n_start
+    nodes:
+    - id: n_start
+      speakerId: char_demo
+      text: 'Oh... hola. ¿Tú eres el nuevo inquilino del piso de al lado?'
+      options:
+      - id: opt_hello
+        text: 'Sí, encantado. ¿Me recomendaste tú el piso?'
+        nextNodeId: n_positive
+        conditions: []
+        effects:
+        - type: 0
+          key: met_ava
+          value: 0
+          stat: 0
+        - type: 3
+          key: char_demo
+          value: 10
+          stat: 0
+      - id: opt_indifferent
+        text: 'No sé de qué hablas, perdona.'
+        nextNodeId: n_negative
+        conditions: []
+        effects:
+        - type: 3
+          key: char_demo
+          value: -5
+          stat: 0
+    - id: n_positive
+      speakerId: char_demo
+      text: 'Jeje, tal vez. Nos veremos por aquí, entonces.'
+      options: []
+    - id: n_negative
+      speakerId: char_demo
+      text: 'Ah... perdona, me he confundido de persona.'
+      options: []
+  messages:
+  - id: msg_ava_01
+    characterId: char_demo
+    text: 'Hola :) ¿Qué tal el piso? Espero que te guste.'
+    visibility: []
+  - id: msg_ava_02
+    characterId: char_demo
+    text: 'Sobre lo de antes... me caes bien. ¡Hablamos mañana!'
+    visibility:
+    - type: 0
+      key: met_ava
+      value: 0
+  - id: msg_ava_03
+    characterId: char_demo
+    text: 'Te he guardado un sitio en la terraza. ¿Vienes esta noche?'
+    visibility:
+    - type: 4
+      key: char_demo
+      value: 10
+  characters:
+  - id: char_demo
+    displayName: Ava
